@@ -1,7 +1,13 @@
 import React from 'react';
 import { Shield, AlertTriangle, Users, Activity, TrendingUp, Server, Globe, Lock } from 'lucide-react';
+import NetworkScanModal from '../QuickActions/NetworkScanModal';
+import SecurityAuditModal from '../QuickActions/SecurityAuditModal';
+import UpdatePoliciesModal from '../QuickActions/UpdatePoliciesModal';
+import IncidentReportModal from '../QuickActions/IncidentReportModal';
 
 const Dashboard: React.FC = () => {
+  const [activeModal, setActiveModal] = React.useState<string | null>(null);
+
   const securityMetrics = [
     {
       title: 'Security Score',
@@ -159,24 +165,54 @@ const Dashboard: React.FC = () => {
       <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-lg p-6 text-white">
         <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center transition-all duration-200 hover:scale-105">
+          <button 
+            onClick={() => setActiveModal('networkScan')}
+            className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center transition-all duration-200 hover:scale-105"
+          >
             <Globe className="h-6 w-6 mx-auto mb-2" />
             <span className="text-sm font-medium">Network Scan</span>
           </button>
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center transition-all duration-200 hover:scale-105">
+          <button 
+            onClick={() => setActiveModal('securityAudit')}
+            className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center transition-all duration-200 hover:scale-105"
+          >
             <Lock className="h-6 w-6 mx-auto mb-2" />
             <span className="text-sm font-medium">Security Audit</span>
           </button>
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center transition-all duration-200 hover:scale-105">
+          <button 
+            onClick={() => setActiveModal('updatePolicies')}
+            className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center transition-all duration-200 hover:scale-105"
+          >
             <Shield className="h-6 w-6 mx-auto mb-2" />
             <span className="text-sm font-medium">Update Policies</span>
           </button>
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center transition-all duration-200 hover:scale-105">
+          <button 
+            onClick={() => setActiveModal('incidentReport')}
+            className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center transition-all duration-200 hover:scale-105"
+          >
             <AlertTriangle className="h-6 w-6 mx-auto mb-2" />
             <span className="text-sm font-medium">Incident Report</span>
           </button>
         </div>
       </div>
+
+      {/* Modals */}
+      <NetworkScanModal 
+        isOpen={activeModal === 'networkScan'} 
+        onClose={() => setActiveModal(null)} 
+      />
+      <SecurityAuditModal 
+        isOpen={activeModal === 'securityAudit'} 
+        onClose={() => setActiveModal(null)} 
+      />
+      <UpdatePoliciesModal 
+        isOpen={activeModal === 'updatePolicies'} 
+        onClose={() => setActiveModal(null)} 
+      />
+      <IncidentReportModal 
+        isOpen={activeModal === 'incidentReport'} 
+        onClose={() => setActiveModal(null)} 
+      />
     </div>
   );
 };
